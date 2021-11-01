@@ -25,11 +25,12 @@ STATUS_404_NO_STUDENTS = "Student not exists"
 )
 @api_view(['GET'])
 def api(request):
-    name = request.GET['name']
+    # name = request.GET['name']
     
-    students = Students.objects.filter(name=name).first()
+    # students = Students.objects.filter(name=name).first()
+    students = Students.objects.all()
     if not students:
         return Response(STATUS_404_NO_STUDENTS, status=status.HTTP_404_NOT_FOUND)
-    serializers = StudentsSerializer(instance=students)
+    serializers = StudentsSerializer(instance=students, many=True)
 
     return Response(serializers.data, status=status.HTTP_200_OK)
